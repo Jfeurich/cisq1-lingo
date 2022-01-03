@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -59,5 +60,16 @@ public class FeedbackTest {
         // Assert
         /* Then the result of feedback.isWordGuessed() equals true (assertTrue(feedback.isWordGuessed())) */
         assertFalse(feedback.isWordInvalid());
+    }
+
+    @Test
+    @DisplayName("Word length differs from marks length")
+    public void guessIsOfWrongLength(){
+        // When we create a new word feedback object with a word and a collection of marks from a length that's different from the word,
+        // Then the feedback class should throw an extension
+        Assertions.assertThrows(
+                RuntimeException.class,
+                () -> new Feedback("woord", List.of(Mark.CORRECT))
+        );
     }
 }

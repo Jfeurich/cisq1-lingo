@@ -1,4 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
+
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackExtension;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -27,17 +30,11 @@ public class Feedback {
         return Objects.hash(attempt, marks);
     }
 
-    public Feedback(String attempt, List<Mark> marks){
+    public Feedback(String attempt, List<Mark> marks) {
         this.attempt = Objects.requireNonNull(attempt);
         this.marks = Objects.requireNonNull(marks);
-        if(attempt.length() != marks.size())
-        {
-            throw new RuntimeException(
-                    System.out.format(
-                            "Amount of marks does not match word length %d%n, %d%n",
-                            attempt.length(),
-                            marks.size()
-                    ).toString());
+        if (attempt.length() != marks.size()) {
+            throw new InvalidFeedbackExtension();
         }
     }
 
