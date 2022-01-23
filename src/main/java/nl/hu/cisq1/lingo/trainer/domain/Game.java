@@ -123,7 +123,7 @@ public class Game {
         {
             case 5: wordLength = 6;break;
             case 6: wordLength = 7;break;
-            case 7: wordLength = 5;break;
+            case 7:
             default: wordLength = 5;break;
         }
     }
