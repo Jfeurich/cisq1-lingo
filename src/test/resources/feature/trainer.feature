@@ -3,7 +3,6 @@ Feature: Specify word length.
   I want to be able to choose word length for a specific practice session,
   In order to practice for a specific gametype.
 
-
 Feature: Start new game
   As a User,
   I want to be able to start a new game,
@@ -48,5 +47,15 @@ Scenario Outline:
     | word   | guess | feedback |
     | cheese | creamy| OXOXXX   |
     | christ | triste| VVVVVX   |
+
+  Given I have submitted a <word>
+  When I make a correct <guess> about the kind and position of a letter
+  Then I get back that letter in the <hints> in the right spot
+  Examples:
+    | word   | guess | hints |
+    | cheese | creamy| c.e...|
+    | cheese | chases| ch....|
+    | christ | triste| ......|
+
 
 

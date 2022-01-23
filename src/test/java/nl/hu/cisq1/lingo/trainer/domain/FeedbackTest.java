@@ -3,8 +3,12 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -72,4 +76,23 @@ public class FeedbackTest {
                 () -> new Feedback("woord", List.of(Mark.CORRECT))
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("provideHintExamples")
+    public void returnCorrectLetters(String attempt, List<Mark> marks, List<String> previoushint){
+        // Arrange
+        Feedback fb = new Feedback(attempt,marks);
+        // Act
+        // Assert
+        assertEquals(fb.giveHint(previoushint),previoushint);
+    }
+
+    public static Stream<Arguments> provideHintExamples() {
+        return Stream.of(
+                Arguments.of("gelukt", List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT), List.of("g","e","l","u","k","t")),
+                Arguments.of("foutje", List.of(Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.CORRECT), List.of("b",".",".",".","j","e")),
+                Arguments.of("gelukt", List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.PRESENT,Mark.ABSENT), List.of("g","e","l",".",".","k"))
+        );
+    }
+
 }
