@@ -41,7 +41,7 @@ public class Feedback {
 
     public List<String> giveHint(List<String> previousHint) {
 
-        List<String> hints = new ArrayList<String>();
+        List<String> hints = new ArrayList<>();
         for (int i = 0; i < marks.size(); i++) {
             if(marks.get(i).equals(Mark.CORRECT))
             {

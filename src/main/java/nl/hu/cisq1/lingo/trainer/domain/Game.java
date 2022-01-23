@@ -72,57 +72,59 @@ public class Game {
     {
         List<Mark> marks = new ArrayList<>();
 
-        if(attempts.size() == 0)
+        if(attempts.isEmpty())
         {
-            for(int i = 0; i < wordToGuess.length();i++)
-            {
-                marks.add(Mark.ABSENT);
-            }
-
-            return new Feedback(createFirstHint(),marks);
+            return createBasicFeedback(marks);
         }
         else if(attempts.get(attempts.size() -1).length() != wordToGuess.length())
         {
-            for(int i = 0; i < wordToGuess.length();i++)
-            {
-                marks.add(Mark.ABSENT);
-            }
-            return new Feedback(createFirstHint(),marks);
+            return createBasicFeedback(marks);
         }
         else
         {
-            for(int i = 0; i < wordToGuess.length();i++)
-            {
-                var c = attempts.get(attempts.size() -1).charAt(i);
-                if (wordToGuess.charAt(i) == c)
-                {
-                    marks.add(Mark.CORRECT);
-                }
-                else if(wordToGuess.contains(String.valueOf(c)))
-                {
-                    marks.add(Mark.PRESENT);
-                }
-                else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-                {
-                    marks.add(Mark.INVALID);
-                }
-                else
-                {
-                    marks.add(Mark.ABSENT);
-                }
-            }
-            return new Feedback(attempts.get(attempts.size() -1),marks);
+            return createAttemptBasedFeedback(marks);
         }
+    }
+
+    private Feedback createAttemptBasedFeedback(List<Mark> marks) {
+        for(int i = 0; i < wordToGuess.length();i++)
+        {
+            var c = attempts.get(attempts.size() -1).charAt(i);
+            if (wordToGuess.charAt(i) == c)
+            {
+                marks.add(Mark.CORRECT);
+            }
+            else if(wordToGuess.contains(String.valueOf(c)))
+            {
+                marks.add(Mark.PRESENT);
+            }
+            else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+            {
+                marks.add(Mark.INVALID);
+            }
+            else
+            {
+                marks.add(Mark.ABSENT);
+            }
+        }
+        return new Feedback(attempts.get(attempts.size() -1), marks);
+    }
+
+    private Feedback createBasicFeedback(List<Mark> marks) {
+        for (int i = 0; i < wordToGuess.length(); i++) {
+            marks.add(Mark.ABSENT);
+        }
+        return new Feedback(createFirstHint(), marks);
     }
 
     private void updateWordLength()
     {
         switch (wordLength)
         {
-            case 5: wordLength = 6;
-            case 6: wordLength = 7;
-            case 7: wordLength = 5;
-            default: wordLength = 5;
+            case 5: wordLength = 6;break;
+            case 6: wordLength = 7;break;
+            case 7: wordLength = 5;break;
+            default: wordLength = 5;break;
         }
     }
 

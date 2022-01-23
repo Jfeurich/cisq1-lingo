@@ -16,7 +16,7 @@ public class FeedbackTest {
 
     @Test
     @DisplayName("Word is guessed if all letters are correct")
-    public void wordIsGuessed() {
+    void wordIsGuessed() {
         // Arrange
 
         // Act
@@ -30,7 +30,7 @@ public class FeedbackTest {
 
     @Test
     @DisplayName("Word is not guessed if not all letters are correct")
-    public void wordIsNotGuessed() {
+    void wordIsNotGuessed() {
         // Arrange
 
         // Act
@@ -43,7 +43,7 @@ public class FeedbackTest {
 
     @Test
     @DisplayName("Word is not guessed if not any letters are invalid")
-    public void guessIsInvalid() {
+    void guessIsInvalid() {
         // Arrange
 
         // Act
@@ -56,7 +56,7 @@ public class FeedbackTest {
 
     @Test
     @DisplayName("Word is not guessed if none of the letters are invalid, and not all of the letters are correct")
-    public void guessIsNotInvalid() {
+    void guessIsNotInvalid() {
         // Arrange
         // Act
         // When we create a new word feedback object (new Feedback) with a guessed "Word" and a collection of marks where none is invalid, and not all are correct
@@ -68,7 +68,7 @@ public class FeedbackTest {
 
     @Test
     @DisplayName("Word length differs from marks length")
-    public void guessIsOfWrongLength(){
+    void guessIsOfWrongLength(){
         // When we create a new word feedback object with a word and a collection of marks from a length that's different from the word,
         // Then the feedback class should throw an extension
         Assertions.assertThrows(
@@ -79,7 +79,7 @@ public class FeedbackTest {
 
     @ParameterizedTest
     @MethodSource("provideHintExamples")
-    public void returnCorrectLetters(String attempt, List<Mark> marks, List<String> previoushint){
+    void returnCorrectLetters(String attempt, List<Mark> marks, List<String> previoushint){
         // Arrange
         Feedback fb = new Feedback(attempt,marks);
         // Act
@@ -87,7 +87,7 @@ public class FeedbackTest {
         assertEquals(fb.giveHint(previoushint),previoushint);
     }
 
-    public static Stream<Arguments> provideHintExamples() {
+    static Stream<Arguments> provideHintExamples() {
         return Stream.of(
                 Arguments.of("gelukt", List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT), List.of("g","e","l","u","k","t")),
                 Arguments.of("foutje", List.of(Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.CORRECT), List.of("b",".",".",".","j","e")),
